@@ -19,6 +19,7 @@ def print_hi(name):
 def check_text_in_read(text):
     picture_path = get_screenshot_path()
     read_text = get_read_text(picture_path)
+    print("check_text_in_read read_text:{}".format(read_text))
     return recognize_chinese_text(read_text, text)
 
 

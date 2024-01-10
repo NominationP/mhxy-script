@@ -2,8 +2,8 @@ import time
 import random
 
 from AnchorRecord import click_sorted, certain_coordinate, next_is_down, anchors_time, remove_certain_value, \
-    next_is_certain, anchors_check_then
-from ClickScreenshot import click_screenshot
+    next_is_certain, anchors_check_then, custom_operate, get_certain_coordinate
+from ClickScreenshot import click_screenshot, click_screenshot_pair
 from main import do_shot_get_coordinate_click, check_text_in_read
 
 flag = "副本已完成"  # Define the flag to check for after encountering "..."
@@ -58,12 +58,12 @@ def do_online():
                             sleep_certain_seconds(anchors_time[click_text])
                         click_screenshot("快速应战", find_coordinates("快速应战"))
                         break
-                    elif click_text in next_is_certain:
-                        random_sleep_less()
-                        click_screenshot("确定", find_coordinates("确定"))
                     elif click_text == "通关":
                         index += 1
                         break
+                    elif click_text in custom_operate:
+                        for op in custom_operate.get(click_text):
+                            click_screenshot_pair(get_certain_coordinate(op))
 
                     # elif click_text in anchors_time:
                     #     anchors_time[click_text] -= 1
@@ -84,7 +84,11 @@ def do_online():
                     print("check_text_in_read:{}".format(check_text))
                     random_sleep_less()
                     click_screenshot(certain_coordinate_key, find_coordinates(sublist[index]))
+                    random_sleep_less()
+                    click_screenshot("确定", find_coordinates("确定"))
                     index += 1
+                else:
+                    break
             else:
                 print("index:{}".format(index))
                 click_screenshot(certain_coordinate_key, find_coordinates(sublist[index]))

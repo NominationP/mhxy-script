@@ -3,7 +3,7 @@ import easyocr
 from PIL import Image
 import ssl
 
-from AnchorRecord import get_all_odds
+from AnchorRecord import get_all_odds, fuzzy_match_def
 from log.recordLog import log_not_found
 
 ssl._create_default_https_context = ssl._create_unverified_context
@@ -47,6 +47,11 @@ def recognize_chinese_text(read_result, target_text):
 
         similarity_ratio = SequenceMatcher(None, target_text, text).ratio()
         # print("target_text:{}, text:{}, target_text in text:{}".format(target_text, text,target_text in text))
+        if text:
+            fuzzy_result = fuzzy_match_def(text)
+            if fuzzy_result:
+                return TargetInfo(fuzzy_result, detection[0])
+
         if text and ((target_text in text) or similarity_ratio >= 0.8):  # Adjust the threshold as needed
             return TargetInfo(target_text, detection[0])
     return None

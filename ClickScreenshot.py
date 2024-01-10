@@ -15,8 +15,8 @@ def click_screenshot(text, app_coordinates):
     app_y = window_rect["Y"]  # Y-coordinate of the app window
 
     # Calculate the range of x and y coordinates within the specified area
-    x_range = (app_x + app_coordinates[0][0], app_x + app_coordinates[2][0])
-    y_range = (app_y + app_coordinates[0][1], app_y + app_coordinates[2][1])
+    x_range = (app_x + app_coordinates[0][0], app_x + app_coordinates[1][0])
+    y_range = (app_y + app_coordinates[0][1], app_y + app_coordinates[1][1])
 
     # Generate random coordinates within the specified area
     random_x = random.randint(x_range[0], x_range[1])
@@ -28,7 +28,7 @@ def click_screenshot(text, app_coordinates):
     pyautogui.click(random_x, random_y)
 
     # 多点一次
-    if text == ("日常-捉鬼" or "曰常-捉鬼" or "曰常-捉鬼"):
+    if text in ("日常-捉鬼", "曰常-捉鬼", "曰常-捉鬼","日常-宝图任务"):
         time.sleep(0.8)
         pyautogui.click(random_x, random_y)
 
