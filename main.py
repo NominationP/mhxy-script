@@ -1,6 +1,4 @@
-import pytesseract
-from PIL import Image
-import os
+
 
 from ClickScreenshot import click_screenshot
 from AnchorRecord import get_all_odds

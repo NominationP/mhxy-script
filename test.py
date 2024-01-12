@@ -1,15 +1,31 @@
-anchors_check_then = [
-    "押送普通镖银",
-    "押送高级镖银(有难度)",
-]
+import os
+import time
 
-certain_coordinate_key = "押送高级镖银(有难度)"
+import pygetwindow as gw
+import pyautogui
 
-if certain_coordinate_key in anchors_check_then:
-    print(False)  # If the key exists in the list, it will not print this statement
-else:
-    print(True)  # If the key doesn't exist in the list, it will print this statement
+app_name = 'MuMu模拟器12-1'
+folder_path = "screenshots"
 
-p = certain_coordinate_key in anchors_check_then
+def get_screenshot_path():
+    # Get the window with the title of your app
+    app_window = gw.getWindowsWithTitle(app_name)[0]
 
-print(p)
+    # Get the coordinates of the app window
+    app_left, app_top, app_width, app_height = app_window.left, app_window.top, app_window.width, app_window.height
+
+    # Calculate the coordinates of the bottom right corner of the app window
+    app_right = app_left + app_width
+    app_bottom = app_top + app_height
+
+    # Capture a screenshot of the app window
+    app_screenshot = pyautogui.screenshot(region=(app_left, app_top, app_width, app_height))
+
+    current_time = time.strftime("%Y%m%d-%H%M%S")
+    path = os.path.join(folder_path, f"{current_time}_screenshot.png")
+
+    app_screenshot.save(path)
+
+
+if __name__ == '__main__':
+    get_screenshot_path()

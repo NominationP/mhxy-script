@@ -1,0 +1,4 @@
+pyautogui~=0.9.54
+win32gui
+pillow~=10.2.0
+PyGetWindow~=0.0.9
