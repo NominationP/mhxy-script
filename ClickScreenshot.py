@@ -1,13 +1,41 @@
 import pyautogui
 import random
 import time
+
+from AnchorRecord import get_certain_coordinate
 from screenShot import get_window_coordinates
 
 
+def is_within_area(a, b):
+    # Extract coordinates for a and b
+    a_coords = a
+    b_coords = b
+
+    # Get the minimum and maximum values for each axis for rectangle a
+    min_x_a = min(a_coords[0][0], a_coords[1][0])
+    max_x_a = max(a_coords[0][0], a_coords[1][0])
+    min_y_a = min(a_coords[0][1], a_coords[1][1])
+    max_y_a = max(a_coords[0][1], a_coords[1][1])
+
+    # Get the minimum and maximum values for each axis for rectangle b
+    min_x_b = min(b_coords[0][0], b_coords[1][0])
+    max_x_b = max(b_coords[0][0], b_coords[1][0])
+    min_y_b = min(b_coords[0][1], b_coords[1][1])
+    max_y_b = max(b_coords[0][1], b_coords[1][1])
+
+    # Check if all four corners of rectangle a are within rectangle b
+    if min_x_b <= min_x_a <= max_x_b and min_y_b <= min_y_a <= max_y_b and \
+            min_x_b <= max_x_a <= max_x_b and min_y_b <= max_y_a <= max_y_b:
+        return True
+    else:
+        return False
+
+
 def click_screenshot(text, app_coordinates):
-    # Define the dimensions of the app window
-    app_width = 480  # Width of the app window
-    app_height = 568  # Height of the app window
+    t, coordinate = get_certain_coordinate("点击禁区")
+    if is_within_area(app_coordinates, coordinate):
+        print("not click ! app_coordinates {} is in area of coordinate {}".format(app_coordinates, coordinate))
+        return
 
     window_rect = get_window_coordinates()
     # Define the position of the app window within the display
@@ -28,7 +56,7 @@ def click_screenshot(text, app_coordinates):
     pyautogui.click(random_x, random_y)
 
     # 多点一次
-    if text in ("日常-捉鬼", "曰常-捉鬼", "曰常-捉鬼","日常-宝图任务"):
+    if text in ("日常-捉鬼", "曰常-捉鬼", "曰常-捉鬼", "日常-宝图任务"):
         time.sleep(0.8)
         pyautogui.click(random_x, random_y)
 

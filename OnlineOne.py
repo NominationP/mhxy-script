@@ -63,7 +63,11 @@ def do_online():
                         break
                     elif click_text in custom_operate:
                         for op in custom_operate.get(click_text):
-                            click_screenshot_pair(get_certain_coordinate(op))
+                            if isinstance(click_text, (int, float)):
+                                sleep_certain_seconds(click_text)
+                            else:
+                                click_screenshot_pair(get_certain_coordinate(op))
+                        index += 1
 
                     # elif click_text in anchors_time:
                     #     anchors_time[click_text] -= 1
