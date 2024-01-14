@@ -46,11 +46,12 @@ def click_screenshot(text, app_coordinates):
     x_range = (app_x + app_coordinates[0][0], app_x + app_coordinates[1][0])
     y_range = (app_y + app_coordinates[0][1], app_y + app_coordinates[1][1])
 
+    print("text:{} app_coordinates:{} x_range:{},y_range: {}".format(text, app_coordinates, x_range, y_range))
+
     # Generate random coordinates within the specified area
     random_x = random.randint(x_range[0], x_range[1])
     random_y = random.randint(y_range[0], y_range[1])
 
-    print("text:{} app_coordinates:{} random_xy:{},{}".format(text, app_coordinates, random_x, random_y))
     # Click on a random coordinate within the specified area
     time.sleep(0.8)
     pyautogui.click(random_x, random_y)
