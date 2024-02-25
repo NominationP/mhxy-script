@@ -13,7 +13,7 @@ import time
 
 import pygetwindow as gw
 import pyautogui
-
+pyautogui.FAILSAFE = False
 app_name = "网易MuMu"  # Specify the exact window title
 
 # Create a folder named "screenshot" if it doesn't exist
@@ -42,7 +42,9 @@ def get_window_coordinates():
         return None
 
 
-app_name = "MuMu模拟器12-1"
+
+
+app_name = "MuMu模拟器12"
 folder_name = "screenshots"
 folder_path = "screenshots"
 

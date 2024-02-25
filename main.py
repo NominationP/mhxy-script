@@ -1,4 +1,4 @@
-
+import os
 
 from ClickScreenshot import click_screenshot
 from AnchorRecord import get_all_odds
@@ -35,11 +35,18 @@ def get_coordinate(image_path):
     return
 
 
+def delete_file(file_path):
+    try:
+        os.remove(file_path)
+    except OSError as e:
+        print(f"Error: {e.filename} - {e.strerror}")
+
+
 # 基础测试: 截图,判断坐标,点击
 def do_shot_get_coordinate_click() -> object:
     picture_path = get_screenshot_path()
     coordinate = get_coordinate(picture_path)
-
+    delete_file(picture_path)
     if hasattr(coordinate, 'position') & hasattr(coordinate, 'text'):
         click_screenshot(coordinate.text, coordinate.position)
     if hasattr(coordinate, 'text'):

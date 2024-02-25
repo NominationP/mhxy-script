@@ -2,7 +2,7 @@ import time
 import random
 
 from AnchorRecord import click_sorted, certain_coordinate, next_is_down, anchors_time, remove_certain_value, \
-    next_is_certain, anchors_check_then, custom_operate, get_certain_coordinate
+    next_is_certain, anchors_check_then, custom_operate, get_certain_coordinate, certain_coordinate_windows
 from ClickScreenshot import click_screenshot, click_screenshot_pair
 from main import do_shot_get_coordinate_click, check_text_in_read
 
@@ -10,14 +10,18 @@ flag = "副本已完成"  # Define the flag to check for after encountering "...
 
 
 def find_coordinates(target):
-    for item in certain_coordinate:
-        if item[0] == target:
-            return item[1]
+    if target in certain_coordinate_windows:
+        return certain_coordinate_windows.get(target)
     return None
 
 
 def random_sleep_less():
     sleep_duration = random.uniform(1, 1.5)  # Generate a random float between 1 and 5
+    time.sleep(sleep_duration)
+
+
+def random_sleep_less_less():
+    sleep_duration = random.uniform(0.3, 1.2)  # Generate a random float between 1 and 5
     time.sleep(sleep_duration)
 
 
@@ -40,6 +44,7 @@ def do_online():
         # for index, certain_coordinate_key in enumerate(sublist):
         index = 0
         while index < len(sublist):
+            random_sleep_less()
             certain_coordinate_key = sublist[index]
             print("task:{} certain_coordinate_key:{}".format(task, certain_coordinate_key))
             if certain_coordinate_key == "...":
@@ -63,7 +68,12 @@ def do_online():
                         break
                     elif click_text in custom_operate:
                         for op in custom_operate.get(click_text):
-                            click_screenshot_pair(get_certain_coordinate(op))
+                            if isinstance(click_text, (int, float)):
+                                sleep_certain_seconds(click_text)
+                            else:
+                                click_screenshot_pair(get_certain_coordinate(op))
+                        index += 1
+                        break
 
                     # elif click_text in anchors_time:
                     #     anchors_time[click_text] -= 1
