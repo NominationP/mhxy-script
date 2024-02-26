@@ -1,4 +1,5 @@
 import pyautogui
+pyautogui.FAILSAFE = False
 import random
 import time
 
@@ -7,6 +8,8 @@ from screenShot import get_window_coordinates
 
 
 def is_within_area(a, b):
+    if a is None or b is None:
+        return False
     # Extract coordinates for a and b
     a_coords = a
     b_coords = b
@@ -32,18 +35,20 @@ def is_within_area(a, b):
 
 
 def click_screenshot(text, app_coordinates):
-    # Define the dimensions of the app window
-    app_width = 480  # Width of the app window
-    app_height = 568  # Height of the app window
+    t, coordinate = get_certain_coordinate("点击禁区")
+    if is_within_area(app_coordinates, coordinate):
+        print("not click ! app_coordinates {} is in area of coordinate {}".format(app_coordinates, coordinate))
+        return
 
-    window_rect = get_window_coordinates()
-    # Define the position of the app window within the display
-    app_x = window_rect["X"]  # X-coordinate of the app window
-    app_y = window_rect["Y"]  # Y-coordinate of the app window
+    left_top_x, left_top_y = app_coordinates[0]
+    right_down_x, right_down_y = app_coordinates[1]
+
+    x, y, app_width, app_height = get_window_coordinates()
 
     # Calculate the range of x and y coordinates within the specified area
-    x_range = (app_x + app_coordinates[0][0], app_x + app_coordinates[1][0])
-    y_range = (app_y + app_coordinates[0][1], app_y + app_coordinates[1][1])
+
+    x_range = (x + left_top_x, x + right_down_x)
+    y_range = (y + left_top_y, y + right_down_y)
 
     # Generate random coordinates within the specified area
     random_x = random.randint(x_range[0], x_range[1])
@@ -66,5 +71,6 @@ def click_screenshot_pair(pair):
 
 if __name__ == '__main__':
     # click_screenshot("快速应战", [[631, 385], [0, 0], [813, 415], [676, 240]])
-    click_screenshot_pair(("打开小地图", [[61, 56], [1, 2], [139, 80]]))
-    click_screenshot_pair(("百晓仙子", [[295, 294], [1, 2], [330, 297]]))
+    click_screenshot_pair(("打开小地图", [[113, 66], [1, 2], [285, 149]]))
+    # click_screenshot_pair(("百晓仙子", [[557, 517], [1, 2], [646, 531]]))
+    click_screenshot_pair(("郑镖头", [[284, 495], [1, 2], [300, 509]]))

@@ -13,8 +13,11 @@ import time
 
 import pygetwindow as gw
 import pyautogui
+
+from AnchorRecord import app_name
+
 pyautogui.FAILSAFE = False
-app_name = "网易MuMu"  # Specify the exact window title
+# app_name = "网易MuMu"  # Specify the exact window title
 
 # Create a folder named "screenshot" if it doesn't exist
 folder_name = "screenshot"
@@ -44,7 +47,7 @@ def get_window_coordinates():
 
 
 
-app_name = "MuMu模拟器12"
+# app_name = "MuMu模拟器12"
 folder_name = "screenshots"
 folder_path = "screenshots"
 
