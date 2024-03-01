@@ -1,9 +1,7 @@
 import time
 import random
 
-from AnchorRecord import click_sorted, certain_coordinate, next_is_down, anchors_time, remove_certain_value, \
-    next_is_certain, anchors_check_then, custom_operate, get_certain_coordinate, certain_coordinate_windows, model_type, \
-    model_type_instance, click_sorted_update
+from AnchorRecord import next_is_down, anchors_time, anchors_check_then, custom_operate, get_certain_coordinate, certain_coordinate_windows, model_type,model_type_instance, click_sorted_update
 from ClickScreenshot import click_screenshot, click_screenshot_pair
 from main import do_shot_get_coordinate_click, check_text_in_read
 
@@ -17,7 +15,7 @@ def find_coordinates(target):
 
 
 def random_sleep_less():
-    sleep_duration = random.uniform(1, 1.5)  # Generate a random float between 1 and 5
+    sleep_duration = random.uniform(0.100, 0.350)  # Generate a random float between 1 and 5
     time.sleep(sleep_duration)
 
 
