@@ -1,13 +1,9 @@
-target_text = "日常-捉鬼"
-text = "日常-捉鬼(1/10)"
+data = [
+    [
+        [[62.0, 20.0], [218.0, 22.0], [217.0, 46.0], [61.0, 44.0]], 'MuMu模拟器12-1', 0.9147662669420242
+    ]
+]
 
-if target_text.startswith(text[:4]):
-    print("target_text starts with the first four characters of text")
-else:
-    print("target_text does not start with the first four characters of text")
+converted_data = [(item[0], item[1], item[2]) for item in data]
 
-
-if text.startswith(target_text[:4]):
-    print("target_text starts with the first four characters of text")
-else:
-    print("target_text does not start with the first four characters of text")
+print(converted_data)

@@ -5,6 +5,7 @@ import ssl
 
 from AnchorRecord import get_all_odds, fuzzy_match_def
 from log.recordLog import log_not_found
+from rapidocr_onnxruntime import RapidOCR
 
 ssl._create_default_https_context = ssl._create_unverified_context
 
@@ -14,9 +15,18 @@ def get_read_text(image_path):
     reader = easyocr.Reader(['ch_sim', 'en'])
     # Perform OCR on the image
     result = reader.readtext(image_path)
-    # print("result:{}".format(result))
+    print("result:{}".format(result))
     return result
 
+
+def get_read_text_and_coordinates(image_path):
+
+    engine = RapidOCR()
+
+    result, elapse = engine(image_path)
+    converted_data = [(item[0], item[1], item[2]) for item in result]
+    print(converted_data)
+    return converted_data
 
 class TargetInfo:
     def __init__(self, text, position):
@@ -62,7 +72,7 @@ if __name__ == '__main__':
     image_path_main = (
         '/Users/yibo/Documents/python/projects/pythonProject1/screenshot/20231224-120225_screenshot.png')
 
-    read_text_main = get_read_text(image_path_main)
+    read_text_main = get_read_text_and_coordinates(image_path_main)
     for odd in get_all_odds():
         is_find = recognize_chinese_text(read_text_main, odd)
         if is_find is not None:

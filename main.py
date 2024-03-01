@@ -3,7 +3,7 @@ import os
 from ClickScreenshot import click_screenshot
 from AnchorRecord import get_all_odds
 from log.recordLog import log_not_found
-from ocr.EasyOCR import recognize_chinese_text, get_read_text
+from ocr.EasyOCR import recognize_chinese_text, get_read_text, get_read_text_and_coordinates
 from screenShot import get_screenshot_path
 
 
@@ -16,13 +16,13 @@ def print_hi(name):
 
 def check_text_in_read(text):
     picture_path = get_screenshot_path()
-    read_text = get_read_text(picture_path)
+    read_text = get_read_text_and_coordinates(picture_path)
     print("check_text_in_read read_text:{}".format(read_text))
     return recognize_chinese_text(read_text, text)
 
 
 def get_coordinate(image_path):
-    read_text = get_read_text(image_path)
+    read_text = get_read_text_and_coordinates(image_path)
     for odd in get_all_odds():
         is_find = None
         if isinstance(odd, str):
@@ -44,6 +44,19 @@ def delete_file(file_path):
 
 # 基础测试: 截图,判断坐标,点击
 def do_shot_get_coordinate_click() -> object:
+    picture_path = get_screenshot_path()
+    coordinate = get_coordinate(picture_path)
+    delete_file(picture_path)
+    if hasattr(coordinate, 'position') & hasattr(coordinate, 'text'):
+        click_screenshot(coordinate.text, coordinate.position)
+    if hasattr(coordinate, 'text'):
+        # todo
+        if coordinate.text == '副本己完咸':
+            return "副本已完成"
+        return coordinate.text
+    return None
+
+def do_shot_get_coordinate_click_update() -> object:
     picture_path = get_screenshot_path()
     coordinate = get_coordinate(picture_path)
     delete_file(picture_path)
