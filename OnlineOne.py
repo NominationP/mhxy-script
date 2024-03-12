@@ -1,7 +1,9 @@
 import time
 import random
 
-from AnchorRecord import next_is_down, anchors_time, anchors_check_then, custom_operate, get_certain_coordinate, certain_coordinate_windows, model_type,model_type_instance, click_sorted_update
+from AnchorRecord import next_is_down, anchors_time, anchors_check_then, custom_operate, get_certain_coordinate, \
+    model_type, model_type_instance, click_sorted_update, get_final_values, is_running_logic_code
+from LargeRecord import certain_coordinate_windows
 from ClickScreenshot import click_screenshot, click_screenshot_pair
 from main import do_shot_get_coordinate_click, check_text_in_read
 
@@ -39,7 +41,8 @@ current_task_name = None
 def do_online():
     global current_task_name
     for task_name in model_type.get(model_type_instance):
-        sublist = click_sorted_update.get(task_name)
+        # sublist = click_sorted_update.get(task_name)
+        sublist = get_final_values(task_name)
         do_process(sublist, task_name)
         print("DONE task:{}".format(task_name))
 
@@ -108,6 +111,8 @@ def do_process(sublist, task):
                 index += 1
             else:
                 break
+        elif certain_coordinate_key in is_running_logic_code:
+            return
         else:
             print("index:{}".format(index))
             click_screenshot(certain_coordinate_key, find_coordinates(sublist[index]))
