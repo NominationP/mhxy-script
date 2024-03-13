@@ -112,7 +112,9 @@ def do_process(sublist, task):
             else:
                 break
         elif certain_coordinate_key in is_running_logic_code:
-            return
+            class_name = is_running_logic_code.get(certain_coordinate_key)
+            class_name().process()
+            index += 1
         else:
             print("index:{}".format(index))
             click_screenshot(certain_coordinate_key, find_coordinates(sublist[index]))
